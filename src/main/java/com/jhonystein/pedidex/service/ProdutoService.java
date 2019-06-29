@@ -24,4 +24,12 @@ public class ProdutoService {
         return repository.findAll();
     }
     
+    public Produto findOne(Long id) {
+        return repository.findById(id).get();
+    }
+    
+    public void remove(Long id) {
+        repository.deleteById(id);
+    }
+    
 }
