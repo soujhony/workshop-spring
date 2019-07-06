@@ -1,6 +1,7 @@
 package com.jhonystein.pedidex.model;
 
 import java.util.List;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -32,6 +33,9 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "id_perfil"))
     private List<Perfil> perfis;
 
+    @Basic(fetch = FetchType.LAZY)
+    private byte[] foto;
+    
     public Long getId() {
         return id;
     }
@@ -70,6 +74,14 @@ public class Usuario {
 
     public void setPerfis(List<Perfil> perfis) {
         this.perfis = perfis;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
     }
     
 }

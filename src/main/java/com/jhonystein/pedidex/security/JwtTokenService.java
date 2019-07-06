@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -63,6 +64,11 @@ public class JwtTokenService {
         return false;
     }
 
+    public String generateToken(UserDetails usuario) {
+        Map<String, Object> claims = new HashMap<>();
+        return doGenerateToken(claims, usuario.getUsername());
+    }
+    
     public String generateToken(Usuario usuario) {
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, usuario.getEmail());

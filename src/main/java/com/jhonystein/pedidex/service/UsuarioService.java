@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Base64Utils;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -62,6 +63,21 @@ public class UsuarioService implements UserDetailsService {
         Usuario base = usuRepo.save(usuario);
 
         return new Session(base.getEmail(), jwtTokenService.generateToken(base));
+    }
+    
+    public String saveFoto(String email, byte[] foto) {
+        Usuario usuario = usuRepo.findByEmail(email);
+        usuario.setFoto(foto);
+        usuRepo.save(usuario);
+        
+        return Base64Utils.encodeToString(foto);
+    }
+    
+    public String getFoto(String email) {
+        byte[] foto = usuRepo.findByEmail(email).getFoto();
+        return foto != null ? Base64Utils.encodeToString(
+                foto
+        ) : null;
     }
 
     @Override
